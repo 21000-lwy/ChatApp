@@ -1,3 +1,6 @@
+import java.io.FileInputStream
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -17,6 +20,20 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(FileInputStream(localPropertiesFile))
+        }
+
+        val siliconFlowBaseUrl = localProperties.getProperty("SILICONFLOW_BASE_URL", "https://api.siliconflow.cn/v1/")
+        val siliconFlowApiKey = localProperties.getProperty("SILICONFLOW_API_KEY", "")
+        val siliconFlowModel = localProperties.getProperty("SILICONFLOW_MODEL", "Qwen/Qwen3.5-4B")
+
+        buildConfigField("String", "SILICONFLOW_BASE_URL", "\"$siliconFlowBaseUrl\"")
+        buildConfigField("String", "SILICONFLOW_API_KEY", "\"$siliconFlowApiKey\"")
+        buildConfigField("String", "SILICONFLOW_MODEL", "\"$siliconFlowModel\"")
     }
 
     buildTypes {
@@ -36,6 +53,7 @@ android {
         jvmTarget = "11"
     }
     buildFeatures {
+        buildConfig = true
         compose = true
     }
     kapt {
@@ -76,5 +94,6 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.navigation.compose)
     implementation("androidx.room:room-rxjava3:2.5.3")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
 }

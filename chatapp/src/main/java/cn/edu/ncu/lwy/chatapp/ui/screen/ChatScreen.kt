@@ -1,5 +1,6 @@
 package cn.edu.ncu.lwy.chatapp.ui.screen
 
+import SiliconFlowChatServiceAdapter
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -60,6 +61,7 @@ import cn.edu.ncu.lwy.chatapp.ui.component.ChatMessageItem
 import cn.edu.ncu.lwy.chatapp.ui.theme.PurpleGrey80
 import cn.edu.ncu.lwy.chatapp.viewmodel.ChatViewModel
 import cn.edu.ncu.lwy.chatapp.viewmodel.ChatViewModelFactory
+import cn.edu.ncu.lwy.chatapp.webservice.ChatService
 import cn.edu.ncu.lwy.chatapp.webservice.ServiceCreator
 
 
@@ -68,8 +70,9 @@ import cn.edu.ncu.lwy.chatapp.webservice.ServiceCreator
 fun ChatScreen(navController: NavController) {
     val context = LocalContext.current
     val chatDb = ChatDatabase.getInstance(context)
+    val chatService: ChatService = SiliconFlowChatServiceAdapter(ServiceCreator.siliconFlowService)
     val viewModelFactory = ChatViewModelFactory(
-        ServiceCreator.chatService,
+        chatService,
         chatDb.chatDao()
     )
     val viewModel: ChatViewModel = ViewModelProvider(
