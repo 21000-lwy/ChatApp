@@ -48,7 +48,7 @@ fun AboutScreen(navController: NavController) {
                 modifier = Modifier.padding(bottom = 16.dp)
             )
             Text(
-                text = "基于 MVI 架构 + Compose 开发，集成本地gemma3:1b模型，支持聊天记录持久化",
+                text = "基于 MVI 架构 + Compose 开发，通过硅基流动API调用大模型（默认Qwen3.5-4B，可切换），支持聊天记录持久化",
                 textAlign = TextAlign.Center,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 8.dp),
@@ -67,12 +67,7 @@ fun AboutScreen(navController: NavController) {
                 fontSize = 18.sp
             )
             Spacer(Modifier.height(20.dp))
-            Text(
-                text = "开发者：大数据231班刘文怡",
-                textAlign = TextAlign.Center,
-                style = MaterialTheme.typography.bodyMedium,
-                fontSize = 18.sp
-            )
+
         }
     }
 }
